@@ -50,7 +50,7 @@
                   <Insets bottom="15.0" />
                </VBox.margin>
             </HBox>
-            <TextArea fx:id="txtResult" promptText="Welcome to the AlienDictionary v2018...">
+            <TextArea fx:id="txtResult" promptText="Welcome to the AlienDictionary v2016...">
                <VBox.margin>
                   <Insets />
                </VBox.margin></TextArea>

@@ -52,7 +52,7 @@ public class AlienController {
 		}
 
 		StringTokenizer st = new StringTokenizer(riga, " ");
-
+		
 		// Controllo su String Tokenizer (superfluo)
 		if (!st.hasMoreElements()) {
 			txtResult.setText("Inserire una o due parole.");
@@ -63,7 +63,7 @@ public class AlienController {
 		String alienWord = st.nextToken();
 
 		if (st.hasMoreTokens()) {
-			// Devo inserire parola e traduzione nel dizionario
+			// Devo inserire nel dizionario
 
 			// Estraggo la seconda parola
 			String translation = st.nextToken();
@@ -76,17 +76,28 @@ public class AlienController {
 			// Aggiungo la parola aliena e traduzione nel dizionario
 			alienDictionary.addWord(alienWord, translation);
 
-			txtResult.setText("La parola: \"" + alienWord + "\", con traduzione: \"" + translation + "\", è stata inserita nel dizionario.");
+			txtResult.setText("La parola: " + alienWord + " traduzione: " + translation + " è stata inserita.");
 
 		} else {
 
 			// Controllo che non ci siano caratteri non ammessi
-			if (!alienWord.matches("[a-zA-Z]*")) {
+			if (!alienWord.matches("[a-zA-Z?]*")) {
 				txtResult.setText("Inserire solo caratteri alfabetici.");
 				return;
 			}
 
-			String translation = alienDictionary.translateWord(alienWord);
+			String translation;
+
+			if (alienWord.matches("[a-zA-Z?]*") && !alienWord.matches("[a-zA-Z]*")) {
+
+				// Traduzione con WildCard
+				translation = alienDictionary.translateWordWildCard(alienWord);
+
+			} else {
+
+				// Traduzione classica
+				translation = alienDictionary.translateWord(alienWord);
+			}
 
 			if (translation != null) {
 				txtResult.setText(translation);
