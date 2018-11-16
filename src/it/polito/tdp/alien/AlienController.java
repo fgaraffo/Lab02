@@ -54,12 +54,13 @@ public class AlienController {
     	if (txtWord.getText().length()==0)
     	{
     		txtResult.setText("ERRORE: Inserire una parola");
-    		return;
+       		return;
     	}
     	
-    	if (!txtWord.getText().matches("[a-zA-Z ]+"))
+    	if (!txtWord.getText().matches("[a-zA-Z ?]+"))
     	{
     		txtResult.setText("ERRORE: caratteri non ammessi");
+    		txtWord.clear();
     		return;
     	}
     		
@@ -76,7 +77,29 @@ public class AlienController {
     			txtResult.appendText(String.format("Traduzione aggiunta: <%s> <%s>\n", alien, word));
     		else
     			txtResult.appendText(String.format("Aggiunta la %da traduzione per <%s>: <%s>\n", add, alien, word));
-     	}
+    		txtWord.clear();
+    		return;
+    	}
+    	if (input.contains("?"))
+    	{
+    		String uno = input.substring(0, input.indexOf("?"));
+    		String due = input.substring(input.indexOf("?")+1);
+    		
+    		ArrayList <String> res = model.wildCard(uno, due, input.length()) ;
+    		
+    		if (res != null)
+    		{
+    			txtResult.setText(String.format("Traduzione di <%s>:\n", input));
+    			for (String s : res)
+    			{
+    				txtResult.appendText(String.format("--> %s = %s\n", s, model.searchWord(s)));
+    			}
+    			
+    		}
+    		else
+    			txtResult.appendText(String.format("Traduzione di <%s> non trovata.", input));
+    		
+    	}
     	else
     	{
     		ArrayList<String> res = model.searchWord(input) ;

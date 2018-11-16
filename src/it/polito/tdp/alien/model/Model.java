@@ -5,6 +5,7 @@ import it.polito.tdp.alien.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +48,23 @@ public class Model {
 	public ArrayList<String> searchWord (String input)
 	{
 		return dictionary.get(input);
+	}
+	
+	public ArrayList<String> wildCard (String uno, String due, int size)
+	{
+		Set res = dictionary.keySet();
+		List <String> risultato = new ArrayList <String> (); 
+		Iterator <String> it = res.iterator();
+		while(it.hasNext())
+		{
+			String s = it.next();
+			if (s.contains(uno) && s.contains(due) && s.length() == size)
+			{
+				risultato.add(s);
+			}
+		}
+		
+		return (ArrayList<String>) risultato;
 	}
 	
 	public void reset() {
