@@ -82,10 +82,9 @@ public class AlienController {
     	}
     	if (input.contains("?"))
     	{
-    		String uno = input.substring(0, input.indexOf("?"));
-    		String due = input.substring(input.indexOf("?")+1);
-    		
-    		ArrayList <String> res = model.wildCard(uno, due, input.length()) ;
+    		String wild = input.replaceAll("\\?", ".");
+    		    		
+    		ArrayList <String> res = model.wildCard(wild) ;
     		
     		if (res != null)
     		{

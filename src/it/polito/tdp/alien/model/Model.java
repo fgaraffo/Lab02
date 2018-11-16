@@ -50,7 +50,7 @@ public class Model {
 		return dictionary.get(input);
 	}
 	
-	public ArrayList<String> wildCard (String uno, String due, int size)
+	public ArrayList<String> wildCard (String wild)
 	{
 		Set res = dictionary.keySet();
 		List <String> risultato = new ArrayList <String> (); 
@@ -58,7 +58,7 @@ public class Model {
 		while(it.hasNext())
 		{
 			String s = it.next();
-			if (s.contains(uno) && s.contains(due) && s.length() == size)
+			if (s.matches(wild))
 			{
 				risultato.add(s);
 			}
