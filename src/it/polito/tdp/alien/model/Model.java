@@ -1,6 +1,8 @@
 package it.polito.tdp.alien.model;
 
 import it.polito.tdp.alien.*;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -10,34 +12,43 @@ import java.util.Set;
 
 public class Model {
 
-	private Map <String, String> dictionary; 
+	private Map <String, ArrayList <String>> dictionary; 
 	
-	public Map <String, String> getDictionary() {
+	public Map <String, ArrayList <String>> getDictionary() {
 		return dictionary;
 	}
 
 	public Model ()
 	{
-		dictionary = new HashMap <String, String> ();
+		dictionary = new HashMap <String, ArrayList <String>> ();
 	}
 	
-	public String addWord (String alien, String word)
+	public int addWord (String alien, String word)
 	{
-		return dictionary.put(alien, word);
+		ArrayList <String> traduzioni;
+		if (dictionary.containsKey(alien))
+		{
+			traduzioni = dictionary.get(alien);
+			traduzioni.add(word);
+			dictionary.put(alien, traduzioni);
+			return traduzioni.size();
+		}
+		else
+		{
+			traduzioni = new ArrayList <String> ();
+			traduzioni.add(word);
+			dictionary.put(alien, traduzioni);
+			return traduzioni.size();
+		}
+		
+		
 	}
 	
-	public String searchWord (String input)
+	public ArrayList<String> searchWord (String input)
 	{
 		return dictionary.get(input);
 	}
 	
-	public Set <String> prova ()
-	{
-		Set <String> prova = new HashSet <String> ();
-		prova = dictionary.keySet();
-		return prova;
-	}
-
 	public void reset() {
 		
 		dictionary.clear();

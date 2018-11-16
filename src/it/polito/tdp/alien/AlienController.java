@@ -5,6 +5,7 @@
 package it.polito.tdp.alien;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -70,15 +71,15 @@ public class AlienController {
     		
     		String word = input.substring(input.indexOf(" ")+1);
     		
-    		String add = model.addWord(alien, word);
-    		if (add == null)
+    		int add = model.addWord(alien, word);
+    		if (add == 1)
     			txtResult.appendText(String.format("Traduzione aggiunta: <%s> <%s>\n", alien, word));
     		else
-    			txtResult.appendText(String.format("Traduzione aggiornata, nuova corrispondenza: <%s> <%s>\n", alien, word));
+    			txtResult.appendText(String.format("Aggiunta la %da traduzione per <%s>: <%s>\n", add, alien, word));
      	}
     	else
     	{
-    		String res = model.searchWord(input) ;
+    		ArrayList<String> res = model.searchWord(input) ;
     		if (res != null)
     		{
     			txtResult.appendText(String.format("Traduzione:\n--> %s = %s\n", input, res));
