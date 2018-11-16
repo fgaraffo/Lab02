@@ -5,7 +5,11 @@
 package it.polito.tdp.alien;
 
 import java.net.URL;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.ResourceBundle;
+
+import it.polito.tdp.alien.model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -14,7 +18,9 @@ import javafx.scene.control.TextField;
 
 public class AlienController {
 
-    @FXML // ResourceBundle that was given to the FXMLLoader
+	private Model model;
+	
+	@FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
 
     @FXML // URL location of the FXML file that was given to the FXMLLoader
@@ -35,11 +41,54 @@ public class AlienController {
     @FXML
     void doReset(ActionEvent event) {
 
+    	txtResult.clear();
+    	model.reset();
+    	
     }
 
     @FXML
     void doTranslate(ActionEvent event) {
 
+    	   	
+    	if (txtWord.getText().length()==0)
+    	{
+    		txtResult.setText("ERRORE: Inserire una parola");
+    		return;
+    	}
+    	
+    	if (!txtWord.getText().matches("[a-zA-Z ]+"))
+    	{
+    		txtResult.setText("ERRORE: caratteri non ammessi");
+    		return;
+    	}
+    		
+    	String input = txtWord.getText().toLowerCase();
+    	
+    	if(input.contains(" "))
+    	{
+    		String alien = input.substring(0, input.indexOf(" "));
+    		
+    		String word = input.substring(input.indexOf(" ")+1);
+    		
+    		String add = model.addWord(alien, word);
+    		if (add == null)
+    			txtResult.appendText(String.format("Traduzione aggiunta: <%s> <%s>\n", alien, word));
+    		else
+    			txtResult.appendText(String.format("Traduzione aggiornata, nuova corrispondenza: <%s> <%s>\n", alien, word));
+     	}
+    	else
+    	{
+    		String res = model.searchWord(input) ;
+    		if (res != null)
+    		{
+    			txtResult.appendText(String.format("Traduzione:\n--> %s = %s\n", input, res));
+    		}
+    		else
+    			txtResult.appendText(String.format("Traduzione di <%s> non trovata.", input));
+    		    		
+       	}
+    	
+    	txtWord.clear();
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
@@ -50,4 +99,10 @@ public class AlienController {
         assert btnReset != null : "fx:id=\"btnReset\" was not injected: check your FXML file 'Alien.fxml'.";
 
     }
+
+	public void setModel(Model m) {
+		
+		this.model = m;
+		
+	}
 }

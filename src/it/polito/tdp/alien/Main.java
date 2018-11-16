@@ -1,5 +1,6 @@
 package it.polito.tdp.alien;
 	
+import it.polito.tdp.alien.model.Model;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -12,11 +13,20 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("Alien.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("Alien.fxml"));
+			BorderPane root = (BorderPane) loader.load();
+			
 			Scene scene = new Scene(root);
+			
+			AlienController controller = (AlienController) loader.getController();
+			
+			Model model = new Model();
+			controller.setModel(model);
+			
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
